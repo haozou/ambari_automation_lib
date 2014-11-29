@@ -7,5 +7,5 @@ target
 *.pyc
 .DS_Store
 *.swp
-
+.project
 /target/
