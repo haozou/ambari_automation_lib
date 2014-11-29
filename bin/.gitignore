@@ -4,8 +4,7 @@ target
 .project
 .DS_Store
 .log
-*.pyc
+.pyc
 .DS_Store
-*.swp
 
 /target/

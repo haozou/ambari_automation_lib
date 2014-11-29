@@ -1,0 +1,34 @@
+{
+    "blueprint": "blueprint-c1", 
+    "default_password": "super-secret-password", 
+    "host_groups": [
+        {
+            "name": "host_group_master",
+            "hosts": [
+                {
+                    "fqdn": "${machine[1]}"
+                }
+            ]
+        }, 
+        {
+            "name": "host_group_monitor",
+            "hosts": [
+                {
+                    "fqdn": "${machine[2]}"
+                }
+            ]
+        }, 
+        {
+            "name": "host_group_slave",
+            "hosts": [
+                { "fqdn": "${machine[3]}" },
+                { "fqdn": "${machine[4]}" },
+                { "fqdn": "${machine[5]}" },
+                { "fqdn": "${machine[6]}" },
+                { "fqdn": "${machine[7]}" },
+                { "fqdn": "${machine[8]}" },
+                { "fqdn": "${machine[9]}" }
+            ]
+        }
+    ]
+}

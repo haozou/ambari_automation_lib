@@ -1,0 +1,175 @@
+{
+	"ambariAutomation" : {
+	    "properties" : {
+    		"vcloud_passwd" : "this_is_vcloud_password", 
+    		"ssh_passwd" : "changeme1",
+    		"docker_passwd" : "docker_password1"
+    	},
+	    "templates" : {
+	    	"infraTemplates" : {
+				"infra_def1" : {
+			    	"implementation" : "io.pivotal.ambari_automation.infra.DCloudInfraManager",
+					"configuration" : {
+						"user" : "docker_user",
+						"password" : "${docker_passwd}",
+						"template" : "docker_image1",
+						"name" : "amari_smoke_test2"
+					},
+					"eventParameters" : {
+						"beforeExecution": {"key1" : "value1", "key2": "value2"}
+					}
+				}
+	    	},
+	    	"machineTemplates" : {
+		    	"machine_def1" : {
+					"sshUser" : "root",
+					"sshPassword" : "${ssh_passwd}",
+					"sshPort" : "22",
+					"sshTimeout" : 60000
+		    	}
+	    	},
+	    	"ambariTemplates" : {
+				"ambari161_def" :{ 
+					"ambariRepo" : {
+						"repoUrl" : "http://public-repo-1.hortonworks.com/ambari/centos6/1.x/updates/1.6.1/ambari.repo"
+					},
+					"adminUser" : "admin1",
+					"adminPassword" : "admin_password1",
+					"serverPort" : 8080
+				},
+				"ambari20_def" :{ 
+					"ambariRepo" : {
+						"repoUrl" : "http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.0/ambari.repo"
+					},
+					"adminUser" : "admin",
+					"adminPassword" : "admin",
+					"serverPort" : 8080
+				},
+				"ambariRpm_def" :{ 
+					"ambariRepo" : {
+						"serverRpmLocation" : "/path/to/ambari-server1.rpm",
+						"agentRpmLocation" : "/path/to/ambari-agent1.rpm"
+					},
+					"adminUser" : "admin",
+					"adminPassword" : "admin",
+					"serverPort" : 8080
+				}
+	    	},
+	    	"hadoopDeployTemplates" : {
+				"hadoop_deploy_def1" :{
+					"clusterName" : "test",
+					"blueprintPath" : "src/test/resources/blueprint1.json",
+					"hostMappingPath" : "src/test/resources/hostmapping1.json"
+				},
+				"hadoop_def_with_gfxd" :{
+					"clusterName" : "test2",
+					"blueprintPath" : "src/test/resources/blueprintWithGemfire.json",
+					"hostMappingPath" : "src/test/resources/hostmappingWithGemfire.json"
+				}
+	    	}
+	    },
+		"executions" : {
+			"pattern1" : {
+				"infra" : {
+				    "implementation" : "io.pivotal.ambari_automation.infra.GPCloudInfraManager",
+					"configuration" : {
+						"user" : "hdqe",
+						"password" : "${vcloud_passwd}",
+						"template" : "PHDEng-DevQA-Centos64-v0.5",
+						"name" : "amari_smoke_test1",
+						"vendorSpecific" : {
+							"org" : "hd1",
+							"vdc" : "vdc1"
+						}
+					},
+					"eventParameters" : {
+						"beforeExecution": ["revertVApp", "startVApp"],
+						"afterExecution": ["stopVApp"]
+					}
+				},
+				"machine" : {
+					"sshUser" : "ssh_user1",
+					"sshPassword" : "ssh_user_password1",
+					"sshPort" : "22",
+					"sshTimeout" : 60000
+				},
+				"ambaris" : {
+					"ambari161" : "ambari161_def",
+					"ambari2" : {
+						"ambariRepo" : {
+							"repoUrl" : "http://public-repo-1.hortonworks.com/ambari/centos6/1.x/updates/2.0/ambari.repo"
+						},
+						"adminUser" : "admin2",
+						"adminPassword" : "admin_password2",
+						"serverPort" : 9090
+					}
+				},
+				"hadoopDeploys" : {
+					"deploy1" : {
+						"clusterName" : "test",
+						"blueprintPath" : "src/test/resources/blueprint-hive.json",
+						"hostMappingPath" : "src/test/resources/hostmapping.json"
+					},
+					"deploy_with_gfxd" : "hadoop_def_with_gfxd"
+				},
+				"testManager" : {
+					"group" : ["hive_test"]
+				}
+			},
+			"pattern2" : {
+				"infra" : "infra_def1",
+				"machine" : "machine_def1",
+				"ambaris" : {
+					"ambari1" : "ambari161_def",
+					"ambari2" : "ambari20_def" 
+				},
+				"hadoopDeploys" : { "deploy1" : "hadoop_deploy_def1" },
+				"testManager" : {
+					"group" : ["hbase_test"]
+				}
+			},
+			"pattern3" : {
+				"infra" : "infra_def1",
+				"machine" : "machine_def1",
+				"ambaris" : {
+					"ambari1" : "ambari161_def",
+					"ambari2" : "ambari20_def" 
+				},
+				"hadoopDeploys" : { "deploy1" : "hadoop_deploy_def1" },
+				"testManager" : {
+					"group" : ["hawq_test"]
+				}
+			},
+			"pattern4" : {
+				"infra" : "infra_def1",
+				"machine" : "machine_def1",
+				"ambaris" : {
+					"ambari1" : "ambari161_def",
+					"ambari2" : "ambari20_def" 
+				},
+				"hadoopDeploys" : { "deploy1" : "hadoop_deploy_def1" },
+				"testManager" : {
+					"group" : ["mr_test"]
+				}
+			},
+			"pattern5" : {
+				"description" : "some elements missing",
+				"testManager" : {
+					"group" : ["mr_test"]
+				}
+			},
+			"pattern6" : {
+				"infra" : "infra_def1",
+				"machine" : "machine_def1",
+				"ambaris" : {
+					"ambari1" : "ambariRpm_def",
+					"ambari2" : "ambari20_def" 
+				},
+				"hadoopDeploys" : { "deploy1" : "hadoop_deploy_def1" },
+				"testManager" : {
+					"group" : ["hbase_test"]
+				}
+			}
+		}
+	}	
+}

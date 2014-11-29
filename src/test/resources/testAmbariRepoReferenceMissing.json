@@ -1,0 +1,64 @@
+{
+	"ambariAutomation" : {
+	    "properties" : {
+    		"ssh_passwd" : "changeme1",
+    		"docker_passwd" : "docker_password1"
+    	},
+	    "templates" : {
+	    	"infraTemplates" : {
+				"infra_def1" : {
+			    	"implementation" : "io.pivotal.ambari_automation.infra.DCloudInfraManager",
+					"configuration" : {
+						"user" : "docker_user",
+						"password" : "${docker_passwd}",
+						"template" : "docker_image1",
+						"name" : "amari_smoke_test2"
+					},
+					"eventParameters" : {
+						"beforeExecution": {"key1" : "value1", "key2": "value2"}
+					}
+				}
+	    	},
+	    	"machineTemplates" : {
+		    	"machine_def1" : {
+					"sshUser" : "root",
+					"sshPassword" : "${ssh_passwd}",
+					"sshPort" : "22",
+					"sshTimeout" : 60000
+		    	}
+	    	},
+	    	"ambariTemplates" : {
+				"ambariRpm_def" :{ 
+					"ambariRepo" : {
+						"repoUrl" : "http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.0/ambari.repo",
+						"serverRpmLocation" : "/path/to/ambari-server1.rpm",
+						"agentRpmLocation" : "/path/to/ambari-server1.rpm"
+					},
+					"adminUser" : "admin",
+					"adminPassword" : "admin",
+					"serverPort" : 8080
+				}
+	    	},
+	    	"hadoopDeployTemplates" : {
+				"hadoop_deploy_def1" :{
+					"clusterName" : "test",
+					"blueprintPath" : "src/test/resources/blueprint1.json",
+					"hostMappingPath" : "src/test/resources/hostmapping1.json"
+				}
+	    	}
+	    },
+		"executions" : {
+			"pattern2" : {
+				"infra" : "infra_def1",
+				"machine" : "machine_def1",
+				"ambaris" : {
+					"ambari1" : "ambari_def_not_exist"
+				},
+				"hadoopDeploys" : { "deploy1" : "hadoop_deploy_def1" },
+				"testManager" : {
+					"group" : ["hbase_test"]
+				}
+			}
+		}
+	}	
+}

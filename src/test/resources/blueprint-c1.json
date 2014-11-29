@@ -1,0 +1,114 @@
+{
+  "host_groups" : [
+    {
+      "name" : "host_group_monitor",
+      "components" : [
+        {
+          "name" : "ZOOKEEPER_SERVER"
+        },
+        {
+          "name" : "GANGLIA_MONITOR"
+        }
+      ],
+      "cardinality" : "1"
+    },
+    {
+      "name" : "host_group_master",
+      "components" : [
+        {
+          "name" : "ZOOKEEPER_SERVER"
+        },
+        {
+          "name" : "STORM_REST_API"
+        },
+        {
+          "name" : "STORM_UI_SERVER"
+        },
+        {
+          "name" : "HBASE_MASTER"
+        },
+        {
+          "name" : "GANGLIA_SERVER"
+        },
+        {
+          "name" : "NAMENODE"
+        },
+        {
+          "name" : "HDFS_CLIENT"
+        },
+        {
+          "name" : "GANGLIA_MONITOR"
+        },
+        {
+          "name" : "NIMBUS"
+        },
+        {
+          "name" : "DRPC_SERVER"
+        }
+      ],
+      "cardinality" : "1"
+    },
+    {
+      "name" : "host_group_slave",
+      "components" : [
+        {
+          "name" : "ZOOKEEPER_CLIENT"
+        },
+        {
+          "name" : "PIG"
+        },
+        {
+          "name" : "HBASE_REGIONSERVER"
+        },
+        {
+          "name" : "OOZIE_CLIENT"
+        },
+        {
+          "name" : "HBASE_CLIENT"
+        },
+        {
+          "name" : "SUPERVISOR"
+        },
+        {
+          "name" : "HCAT"
+        },
+        {
+          "name" : "FALCON_CLIENT"
+        },
+        {
+          "name" : "TEZ_CLIENT"
+        },
+        {
+          "name" : "SQOOP"
+        },
+        {
+          "name" : "HDFS_CLIENT"
+        },
+        {
+          "name" : "HIVE_CLIENT"
+        },
+        {
+          "name" : "NODEMANAGER"
+        },
+        {
+          "name" : "YARN_CLIENT"
+        },
+        {
+          "name" : "MAPREDUCE2_CLIENT"
+        },
+        {
+          "name" : "DATANODE"
+        },
+        {
+          "name" : "GANGLIA_MONITOR"
+        }
+      ],
+      "cardinality" : "10"
+    }
+  ],
+  "Blueprints" : {
+    "blueprint_name" : "blueprint-c1",
+    "stack_name" : "HDP",
+    "stack_version" : "2.1"
+  }
+}
